@@ -1,8 +1,8 @@
 {
-  "name": "LaravelTranslations",
+  "name": "laraveltranslations",
   "version": "1.0.0",
   "description": "Package for load Laravel translations into JS ",
-  "main": "dist/index.js",
+  "main": "dist/bundle.js",
   "author": "Rafal Tadaszak",
   "license": "MIT",
   "keywords": [
@@ -25,10 +25,13 @@
     "@babel/preset-env": "^7.5.5",
     "nodemon": "^1.19.1",
     "ts-loader": "^6.0.4",
-    "typescript": "^3.5.3"
+    "typescript": "^3.5.3",
+    "webpack": "^4.39.1",
+    "webpack-cli": "^3.3.6"
   },
   "scripts": {
     "build": "tsc",
+    "webpack": "webpack",
     "watch": "tsc --watch",
     "start": "nodemon --exec babel-node index.mjs"
   },
@@ -36,5 +39,5 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/soitpl/LaravelTranslations.git"
-  },
+  }
 }

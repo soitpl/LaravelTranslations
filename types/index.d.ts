@@ -1,7 +1,13 @@
+
+declare class LaravelTranslations {
+    constructor(options?: Options)
+    public build(): LangObject;
+}
+
 export interface Options {
-    dir: string[]|DirObject[],
+    dir: (string|DirObject)[],
     files?: [string],
-    json: boolean,
+    json?: boolean,
     php: boolean,
     parameters?: string
 }
@@ -20,3 +26,5 @@ export interface ParseDir {
 export interface LangObject {
     [key:string]: string|LangObject
 }
+
+export default LaravelTranslations;
