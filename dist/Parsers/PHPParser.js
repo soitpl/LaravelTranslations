@@ -11,11 +11,11 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var fs = require("fs");
 var _ = require("lodash");
 var klawSync = require("klaw-sync");
 var path = require("path");
 var phpArrayParser = require("php-array-parser");
-var fs = require("fs");
 import { FileParser } from "./FileParser";
 var PHPParser = /** @class */ (function (_super) {
     __extends(PHPParser, _super);

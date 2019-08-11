@@ -1,10 +1,11 @@
 import { LangObject, ParseDir } from "../../types";
 
+const fs = require("fs");
 const _ = require("lodash");
 const klawSync = require("klaw-sync");
 const path = require("path");
 const phpArrayParser = require("php-array-parser");
-const fs = require("fs");
+
 
 import { FileParser } from "./FileParser";
 

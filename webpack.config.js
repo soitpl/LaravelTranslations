@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.ts',
+  entry: './src/LaravelTranslations.ts',
   target: 'node',
   module: {
     rules: [
@@ -15,8 +15,11 @@ module.exports = {
   resolve: {
     extensions: [ '.tsx', '.ts', '.js' ]
   },
+  externals: ["fs"],
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
+    libraryTarget: 'umd',
+    libraryExport: 'default',
   }
 };

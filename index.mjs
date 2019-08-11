@@ -1,6 +1,6 @@
 import LaravelTranslations from "./dist/index.js";
 
-const lang = new LaravelTranslations({
+const lang =  LaravelTranslations.build({
   dir: [
     "../../soIT/Premio/resources/lang",
     {
@@ -10,5 +10,5 @@ const lang = new LaravelTranslations({
   ],
   php: true,
   json: true
-}).build();
+});
 console.log(lang);
