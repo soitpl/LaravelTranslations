@@ -1,0 +1,40 @@
+{
+  "name": "LaravelTranslations",
+  "version": "1.0.0",
+  "description": "Package for load Laravel translations into JS ",
+  "main": "dist/index.js",
+  "author": "Rafal Tadaszak",
+  "license": "MIT",
+  "keywords": [
+    "laravel",
+    "localizations",
+    "vuetify",
+    "i18n",
+    "i18next"
+  ],
+  "dependencies": {
+    "@types/node": "^12.7.1",
+    "glob": "^7.1.4",
+    "klaw-sync": "^6.0.0",
+    "php-array-parser": "^1.0.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "nodemon": "^1.19.1",
+    "ts-loader": "^6.0.4",
+    "typescript": "^3.5.3"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "start": "nodemon --exec babel-node index.mjs"
+  },
+  "types": "types/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/soitpl/LaravelTranslations.git"
+  },
+}
