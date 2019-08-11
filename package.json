@@ -1,6 +1,6 @@
 {
   "name": "laraveltranslations",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Package for load Laravel translations into JS ",
   "main": "dist/bundle.js",
   "author": "Rafal Tadaszak",
