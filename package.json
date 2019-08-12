@@ -1,13 +1,18 @@
 {
-  "name": "laraveltranslations",
-  "version": "1.0.4",
-  "description": "Package for load Laravel translations into JS ",
-  "main": "dist/bundle.js",
-  "author": "Rafal Tadaszak",
+  "name": "laravel-lang-loader",
+  "version": "1.0.1",
+  "description": "Loader for parse and load Laravel lang files into JS translations libraries ",
+  "main": "index.js",
+  "author": {
+    "name": "Rafal Tadaszak",
+    "email": "r.tadaszak@soit.pl",
+    "url": "http://soit.pl"
+  },
   "license": "MIT",
   "keywords": [
     "laravel",
     "localizations",
+    "lang",
     "vuetify",
     "i18n",
     "i18next"
@@ -31,7 +36,6 @@
   },
   "scripts": {
     "build": "tsc",
-    "webpack": "webpack",
     "watch": "tsc --watch",
     "start": "nodemon --exec babel-node index.mjs"
   },
@@ -39,8 +43,5 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/soitpl/LaravelTranslations.git"
-  },
-  "browser": {
-    "fs": false
   }
 }

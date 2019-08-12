@@ -1,11 +1,10 @@
-var LaravelTranslationsUtils = /** @class */ (function () {
-    function LaravelTranslationsUtils() {
-    }
-    LaravelTranslationsUtils.LogError = function (message) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class LaravelTranslationsUtils {
+    static LogError(message) {
         console.log("LaravelTranslationsError: " +
             message);
-    };
-    return LaravelTranslationsUtils;
-}());
-export { LaravelTranslationsUtils };
+    }
+}
+exports.LaravelTranslationsUtils = LaravelTranslationsUtils;
 //# sourceMappingURL=Utils.js.map

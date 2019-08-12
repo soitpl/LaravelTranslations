@@ -1,96 +1,79 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var fs = require("fs");
-var _ = require("lodash");
-var klawSync = require("klaw-sync");
-var path = require("path");
-var phpArrayParser = require("php-array-parser");
-import { FileParser } from "./FileParser";
-var PHPParser = /** @class */ (function (_super) {
-    __extends(PHPParser, _super);
-    function PHPParser() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const fs = require("fs");
+const _ = require("lodash");
+const klawSync = require("klaw-sync");
+const path = require("path");
+const phpArrayParser = require("php-array-parser");
+const FileParser_1 = require("./FileParser");
+class PHPParser extends FileParser_1.FileParser {
     /**
      * Execute parser
      */
-    PHPParser.prototype.execute = function () {
-        var _this = this;
-        this.dirs.forEach(function (parseDirObject) {
-            var basePath = parseDirObject.path;
-            var directories = fs.readdirSync(basePath).filter(function (file) {
+    execute() {
+        this.dirs.forEach((parseDirObject) => {
+            const basePath = parseDirObject.path;
+            const directories = fs.readdirSync(basePath).filter((file) => {
                 return fs.statSync(path.join(basePath, file)).isDirectory();
             });
-            directories.forEach(function (directory) {
-                if (_this.langContent[directory] === undefined) {
-                    _this.langContent[directory] = {};
+            directories.forEach((directory) => {
+                if (this.langContent[directory] === undefined) {
+                    this.langContent[directory] = {};
                 }
-                var langDirectory = path.join(basePath, directory);
-                var langObject = _this.walkDir(langDirectory);
+                const langDirectory = path.join(basePath, directory);
+                let langObject = this.walkDir(langDirectory);
                 if (langObject && Object.keys(langObject).length) {
                     if (parseDirObject.namespace) {
-                        _this.initNamespace(directory, parseDirObject.namespace);
+                        this.initNamespace(directory, parseDirObject.namespace);
                         // @ts-ignore
-                        _.assign(_this.langContent[directory][parseDirObject.namespace], langObject);
+                        _.assign(this.langContent[directory][parseDirObject.namespace], langObject);
                     }
                     else {
-                        _.assign(_this.langContent[directory], langObject);
+                        _.assign(this.langContent[directory], langObject);
                     }
                 }
             });
         });
         return this.langContent;
-    };
+    }
     /**
      * Walk PHP files
      *
      * @param dir
      */
-    PHPParser.prototype.walkDir = function (dir) {
-        var localLangObjects = {};
+    walkDir(dir) {
+        let localLangObjects = {};
         klawSync(dir, {
             nodir: true
         })
-            .filter(function (file) {
+            .filter((file) => {
             return path.extname(file.path) === ".php";
         })
-            .forEach(function (file) {
+            .forEach((file) => {
             localLangObjects[path.basename(file.path, ".php")] = PHPParser.proceedContent(fs.readFileSync(path.join(dir, path.basename(file.path)), "utf8"));
         });
         return localLangObjects;
-    };
+    }
     /**
      * Parse PHP array to JSON
      *
      * @param fileContent
      */
-    PHPParser.proceedContent = function (fileContent) {
+    static proceedContent(fileContent) {
         fileContent = PHPParser.getArrayOnly(fileContent);
         return phpArrayParser.parse(fileContent);
-    };
+    }
     /**
      * Remove all comments and ending ?> from file content
      *
      * @param fileContent
      */
-    PHPParser.getArrayOnly = function (fileContent) {
+    static getArrayOnly(fileContent) {
         fileContent = fileContent.substr(fileContent.indexOf("return") + 6);
         fileContent = fileContent.replace(/(\/\*[^*]*\*\/)|(\/\/[^*]*)/g, "");
         fileContent = fileContent.replace(/\?>\s*$/, "");
         return fileContent;
-    };
-    return PHPParser;
-}(FileParser));
-export { PHPParser };
+    }
+}
+exports.PHPParser = PHPParser;
 //# sourceMappingURL=PHPParser.js.map

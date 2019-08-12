@@ -1,12 +1,15 @@
-import {JSONParser} from "./Parsers/JSONParser";
+import * as fs from "fs";
 
 const _ = require("lodash");
+const path = require("path");
 
 import { LangObject, Options, ParseDir } from "../types";
 import { PathParser } from "./Parsers/PathParser";
 import { PHPParser } from "./Parsers/PHPParser";
+import {JSONParser} from "./Parsers/JSONParser";
+import { LaravelTranslationsUtils } from "./Utils";
 
-class LaravelTranslations {
+export default class LaravelTranslations {
     private static translationsPaths: ParseDir[] = [];
     private static options: Options = {
         dir: [],
@@ -15,25 +18,28 @@ class LaravelTranslations {
     };
 
     private static output: LangObject = {};
+    private static configFileName: string = ".lll.config.json";
 
     /**
      * Build language object
      */
-    static build(options: Options) : LangObject {
-        LaravelTranslations.options = options;
+    static build() : LangObject {
+        LaravelTranslations.options = LaravelTranslations.getOptions();
 
-        this.parseDirs();
+        if (LaravelTranslations.options) {
+            this.parseDirs();
 
-        if (this.options.php) {
-            this.parsePHP();
-        }
+            if (this.options.php) {
+                this.parsePHP();
+            }
 
-        if (this.options.json) {
-            this.parseJSON();
-        }
+            if (this.options.json) {
+                this.parseJSON();
+            }
 
-        if (this.options.parameters) {
-            this.replaceParameters();
+            if (this.options.parameters) {
+                this.replaceParameters();
+            }
         }
 
         return this.output;
@@ -54,7 +60,7 @@ class LaravelTranslations {
      */
     private static parseJSON() {
         const parser = new JSONParser(LaravelTranslations.translationsPaths);
-        _.assign(LaravelTranslations.output, parser.execute());
+        _.merge(LaravelTranslations.output, parser.execute());
     }
 
     /**
@@ -62,7 +68,7 @@ class LaravelTranslations {
      */
     private static parsePHP() {
         const parser = new PHPParser(LaravelTranslations.translationsPaths);
-        _.assign(LaravelTranslations.output, parser.execute());
+        _.merge(LaravelTranslations.output, parser.execute());
     }
 
     /**
@@ -72,5 +78,24 @@ class LaravelTranslations {
         LaravelTranslations.output = JSON.parse(JSON.stringify(LaravelTranslations.output).replace(/\:(\w+)/g, LaravelTranslations.options.parameters as string));
     }
 
+    /**
+     * Get configurations from file
+     */
+    private static getOptions(): Options|undefined {
+        const filePath = path.resolve(__dirname, '../../../resources/lang/'+ LaravelTranslations.configFileName);
+
+        try {
+            if (fs.existsSync(filePath)) {
+                const options = JSON.parse(fs.readFileSync(filePath) as any);
+
+                if (options === undefined) {
+                    LaravelTranslationsUtils.LogError("Options file is incorrect");
+                }
+
+                return options;
+            }
+        } catch(error) {
+            LaravelTranslationsUtils.LogError(error);
+        }
+    }
 }
-export default LaravelTranslations;

@@ -1,5 +1,7 @@
-var FileParser = /** @class */ (function () {
-    function FileParser(dirs) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class FileParser {
+    constructor(dirs) {
         this.langContent = {};
         this.dirs = [];
         this.dirs = dirs;
@@ -10,12 +12,11 @@ var FileParser = /** @class */ (function () {
      * @param lang
      * @param namespace
      */
-    FileParser.prototype.initNamespace = function (lang, namespace) {
+    initNamespace(lang, namespace) {
         if (this.langContent[lang][namespace] == undefined) {
             this.langContent[lang][namespace] = {};
         }
-    };
-    return FileParser;
-}());
-export { FileParser };
+    }
+}
+exports.FileParser = FileParser;
 //# sourceMappingURL=FileParser.js.map
